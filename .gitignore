@@ -1,0 +1,3 @@
+hospital-env
+hospital/.env
+hospital/db.sqlite3

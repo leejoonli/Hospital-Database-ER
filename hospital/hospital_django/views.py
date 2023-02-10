@@ -99,3 +99,27 @@ class PrescribeList(generics.ListCreateAPIView):
 class PrescribeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Prescribe.objects.all()
     serializer_class = PrescribeSerializer
+
+class RoomList(generics.ListCreateAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+class RoomDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+class StayList(generics.ListCreateAPIView):
+    queryset = Stay.objects.all()
+    serializer_class = StaySerializer
+
+class StayDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Stay.objects.all()
+    serializer_class = StaySerializer
+
+class UndergoList(generics.ListCreateAPIView):
+    queryset = Undergo.objects.all()
+    serializer_class = UndergoSerializer
+
+class UndergoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Undergo.objects.all()
+    serializer_class = UndergoSerializer

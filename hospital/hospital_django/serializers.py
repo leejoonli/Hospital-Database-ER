@@ -149,3 +149,60 @@ class PrescribeSerializer(serializers.HyperlinkedModelSerializer):
         model = Prescribe
         fields = ('id', 'physician', 'physician_id', 'patient', 'patient_id', 'medication', 'medication_id', 'appointment', 'appointment_id', 'date', 'dose', 'prescribe_url')
 
+class RoomSerializer(serializers.HyperlinkedModelSerializer):
+    block = serializers.HyperlinkedRelatedField(view_name='block_detail', read_only=True)
+    block_id = serializers.PrimaryKeyRelatedField(
+        queryset=Block.objects.all(),
+        source='block'
+    )
+    room_url = serializers.ModelSerializer.serializer_url_field(view_name='room_detail')
+    class Meta:
+        model = Room
+        fields = ('id', 'block', 'block_id', 'room_type', 'unavailable', 'room_url')
+
+class StaySerializer(serializers.HyperlinkedModelSerializer):
+    patient = serializers.HyperlinkedRelatedField(view_name='patient_detail', read_only=True)
+    patient_id = serializers.PrimaryKeyRelatedField(
+        queryset=Patient.objects.all(),
+        source='patient'
+    )
+    room = serializers.HyperlinkedRelatedField(view_name='room_detail', read_only=True)
+    room_id = serializers.PrimaryKeyRelatedField(
+        queryset=Room.objects.all(),
+        source='room'
+    )
+    stay_url = serializers.ModelSerializer.serializer_url_field(view_name='stay_detail')
+    class Meta:
+        model = Stay
+        fields = ('id', 'patient', 'patient_id', 'room', 'room_id', 'start_time', 'end_time', 'stay_url')
+
+class UndergoSerializer(serializers.HyperlinkedModelSerializer):
+    patient = serializers.HyperlinkedRelatedField(view_name='patient_detail', read_only=True)
+    patient_id = serializers.PrimaryKeyRelatedField(
+        queryset=Patient.objects.all(),
+        source='patient'
+    )
+    procedure = serializers.HyperlinkedRelatedField(view_name='procedure_detail', read_only=True)
+    procedure_id = serializers.PrimaryKeyRelatedField(
+        queryset=Procedure.objects.all(),
+        source='procedure'
+    )
+    stay = serializers.HyperlinkedRelatedField(view_name='stay_detail', read_only=True)
+    stay_id = serializers.PrimaryKeyRelatedField(
+        queryset=Stay.objects.all(),
+        source='stay'
+    )
+    physician = serializers.HyperlinkedRelatedField(view_name='physician_detail', read_only=True)
+    physician_id = serializers.PrimaryKeyRelatedField(
+        queryset=Physician.objects.all(),
+        source='physician'
+    )
+    assisting_nurse = serializers.HyperlinkedRelatedField(view_name='nurse_detail', read_only=True)
+    assisting_nurse_id = serializers.PrimaryKeyRelatedField(
+        queryset=Nurse.objects.all(),
+        source='assisting_nurse'
+    )
+    undergo_url = serializers.ModelSerializer.serializer_url_field(view_name='undergo_detail')
+    class Meta:
+        model = Undergo
+        fields = ('id', 'patient', 'patient_id', 'procedure', 'procedure_id', 'stay', 'stay_id', 'physician', 'physician_id', 'assisting_nurse', 'assisting_nurse_id', 'date', 'undergo_url')

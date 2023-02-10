@@ -27,4 +27,10 @@ urlpatterns = [
     path('appointments/<int:pk>', views.AppointmentDetail.as_view(), name='appointment_detail'),
     path('prescribes', views.PrescribeList.as_view(), name='prescribe_list'),
     path('prescribes/<int:pk>', views.PrescribeDetail.as_view(), name='prescribe_detail'),
+    path('rooms', views.RoomList.as_view(), name='room_list'),
+    path('rooms/<int:pk>', views.RoomDetail.as_view(), name='room_detail'),
+    path('stays', views.StayList.as_view(), name='stay_list'),
+    path('stays/<int:pk>', views.StayDetail.as_view(), name='stay_detail'),
+    path('undergoes', views.UndergoList.as_view(), name='undergo_list'),
+    path('undergoes/<int:pk>', views.UndergoDetail.as_view(), name='undergo_detail'),
 ]

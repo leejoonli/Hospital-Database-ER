@@ -14,6 +14,7 @@ from pathlib import Path
 import psycopg2.extensions
 import os
 from dotenv import load_dotenv, find_dotenv
+import dj_database_url
 
 load_dotenv(find_dotenv())
 
@@ -28,10 +29,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if os.environ['MODE'] == 'dev' else False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['django-env.eba-sgxspjyz.us-east-1.elasticbeanstalk.com']
 
+CORS_ALLOWED_ORIGINS = [
+    "django-env.eba-sgxspjyz.us-east-1.elasticbeanstalk.com",
+    "http://127.0.0.1:5432"
+]
 
 # Application definition
 
@@ -44,11 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hospital_django',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -81,14 +88,7 @@ WSGI_APPLICATION = 'hospital.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'OPTIONS': {
-            'service': 'my_service',
-            'passfile': '.my_pgpass',
-            'isolation_level': psycopg2.extensions.ISOLATION_LEVEL_SERIALIZABLE,
-        },
-    }
+    'default': dj_database_url.config(conn_max_age=600)
 }
 
 
@@ -140,3 +140,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+STATIC_ROOT=os.path.join(BASE_DIR, "static/")

@@ -51,3 +51,51 @@ class DepartmentList(generics.ListCreateAPIView):
 class DepartmentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
+
+class BlockList(generics.ListCreateAPIView):
+    queryset = Block.objects.all()
+    serializer_class = BlockSerializer
+
+class BlockDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Block.objects.all()
+    serializer_class = BlockSerializer
+
+class On_callList(generics.ListCreateAPIView):
+    queryset = On_call.objects.all()
+    serializer_class = On_callSerializer
+
+class On_callDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = On_call.objects.all()
+    serializer_class = On_callSerializer
+
+class Affiliated_withList(generics.ListCreateAPIView):
+    queryset = Affiliated_with.objects.all()
+    serializer_class = Affiliated_withSerializer
+
+class Affiliated_withDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Affiliated_with.objects.all()
+    serializer_class = Affiliated_withSerializer
+
+class Trained_inList(generics.ListCreateAPIView):
+    queryset = Trained_in.objects.all()
+    serializer_class = Trained_inSerializer
+
+class Trained_inDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Trained_in.objects.all()
+    serializer_class = Trained_inSerializer
+
+class AppointmentList(generics.ListCreateAPIView):
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentSerializer
+
+class AppointmentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentSerializer
+
+class PrescribeList(generics.ListCreateAPIView):
+    queryset = Prescribe.objects.all()
+    serializer_class = PrescribeSerializer
+
+class PrescribeDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Prescribe.objects.all()
+    serializer_class = PrescribeSerializer

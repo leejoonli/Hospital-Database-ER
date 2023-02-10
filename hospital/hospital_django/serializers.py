@@ -47,3 +47,105 @@ class DepartmentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Department
         fields = ('id', 'name', 'physician', 'physician_id', 'department_url')
+
+class BlockSerializer(serializers.HyperlinkedModelSerializer):
+    block_url = serializers.ModelSerializer.serializer_url_field(view_name='block_detail')
+    class Meta:
+        model = Block
+        fields = ('id', 'block_floor', 'block_code', 'block_url')
+
+class On_callSerializer(serializers.HyperlinkedModelSerializer):
+    nurse = serializers.HyperlinkedRelatedField(view_name='nurse_detail', read_only=True)
+    nurse_id = serializers.PrimaryKeyRelatedField(
+        queryset=Nurse.objects.all(),
+        source='nurse'
+    )
+    block = serializers.HyperlinkedRelatedField(view_name='block_detail', read_only=True)
+    block_id = serializers.PrimaryKeyRelatedField(
+        queryset=Block.objects.all(),
+        source='block'
+    )
+    on_call_url = serializers.ModelSerializer.serializer_url_field(view_name='on_call_detail')
+    class Meta:
+        model = On_call
+        fields = ('id', 'nurse', 'nurse_id', 'block', 'block_id', 'on_call_start', 'on_call_end', 'on_call_url')
+
+class Affiliated_withSerializer(serializers.HyperlinkedModelSerializer):
+    physician = serializers.HyperlinkedRelatedField(view_name='physician_detail', read_only=True)
+    physician_id = serializers.PrimaryKeyRelatedField(
+        queryset=Physician.objects.all(),
+        source='physician'
+    )
+    department = serializers.HyperlinkedRelatedField(view_name='department_detail', read_only=True)
+    department_id = serializers.PrimaryKeyRelatedField(
+        queryset=Department.objects.all(),
+        source='department'
+    )
+    affiliated_with_url = serializers.ModelSerializer.serializer_url_field(view_name='affiliated_with_detail')
+    class Meta:
+        model = Affiliated_with
+        fields = ('id', 'physician', 'physician_id', 'department', 'department_id', 'primary_affiliation', 'affiliated_with_url')
+
+class Trained_inSerializer(serializers.HyperlinkedModelSerializer):
+    physician = serializers.HyperlinkedRelatedField(view_name='physician_detail', read_only=True)
+    physician_id = serializers.PrimaryKeyRelatedField(
+        queryset=Physician.objects.all(),
+        source='physician'
+    )
+    treatment = serializers.HyperlinkedRelatedField(view_name='procedure_detail', read_only=True)
+    treatment_id = serializers.PrimaryKeyRelatedField(
+        queryset=Procedure.objects.all(),
+        source='treatment'
+    )
+    trained_in_url = serializers.ModelSerializer.serializer_url_field(view_name='trained_in_detail')
+    class Meta:
+        model = Trained_in
+        fields = ('id', 'physician', 'physician_id', 'treatment', 'treatment_id', 'certification_date', 'certification_exp', 'trained_in_url')
+
+class AppointmentSerializer(serializers.HyperlinkedModelSerializer):
+    patient = serializers.HyperlinkedRelatedField(view_name='patient_detail', read_only=True)
+    patient_id = serializers.PrimaryKeyRelatedField(
+        queryset=Patient.objects.all(),
+        source='patient'
+    )
+    prep_nurse = serializers.HyperlinkedRelatedField(view_name='nurse_detail', read_only=True)
+    prep_nurse_id = serializers.PrimaryKeyRelatedField(
+        queryset=Nurse.objects.all(),
+        source='prep_nurse'
+    )
+    physician = serializers.HyperlinkedRelatedField(view_name='physician_detail', read_only=True)
+    physician_id = serializers.PrimaryKeyRelatedField(
+        queryset=Physician.objects.all(),
+        source='physician'
+    )
+    appointment_url = serializers.ModelSerializer.serializer_url_field(view_name='appointment_detail')
+    class Meta:
+        model = Appointment
+        fields = ('id', 'patient', 'patient_id', 'prep_nurse', 'prep_nurse_id', 'physician', 'physician_id', 'start_dt_time', 'end_dt_time', 'examination_room', 'appointment_url')
+
+class PrescribeSerializer(serializers.HyperlinkedModelSerializer):
+    physician = serializers.HyperlinkedRelatedField(view_name='physician_detail', read_only=True)
+    physician_id = serializers.PrimaryKeyRelatedField(
+        queryset=Physician.objects.all(),
+        source='physician'
+    )
+    patient = serializers.HyperlinkedRelatedField(view_name='patient_detail', read_only=True)
+    patient_id = serializers.PrimaryKeyRelatedField(
+        queryset=Patient.objects.all(),
+        source='patient'
+    )
+    medication = serializers.HyperlinkedRelatedField(view_name='medication_detail', read_only=True)
+    medication_id = serializers.PrimaryKeyRelatedField(
+        queryset=Medication.objects.all(),
+        source='medication'
+    )
+    appointment = serializers.HyperlinkedRelatedField(view_name='appointment_detail', read_only=True)
+    appointment_id = serializers.PrimaryKeyRelatedField(
+        queryset=Appointment.objects.all(),
+        source='appointment'
+    )
+    prescribe_url = serializers.ModelSerializer.serializer_url_field(view_name='prescribe_detail')
+    class Meta:
+        model = Prescribe
+        fields = ('id', 'physician', 'physician_id', 'patient', 'patient_id', 'medication', 'medication_id', 'appointment', 'appointment_id', 'date', 'dose', 'prescribe_url')
+

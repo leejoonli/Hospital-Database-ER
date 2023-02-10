@@ -62,7 +62,7 @@ class On_call(models.Model):
     nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE, related_name='on_calls')
     block = models.ForeignKey(Block, on_delete=models.CASCADE, related_name='on_calls')
     on_call_start = models.DateTimeField(auto_now_add=True)
-    on_call_end = models.DateTimeField(auto_now_add=True)
+    on_call_end = models.DateTimeField()
 
     def __str__(self):
         return (f'{self.on_call_start} - {self.on_call_end}')
@@ -75,8 +75,8 @@ class Affiliated_with(models.Model):
 class Trained_in(models.Model):
     physician = models.ForeignKey(Physician, on_delete=models.CASCADE, related_name='trained_ins')
     treatment = models.ForeignKey(Procedure, on_delete=models.CASCADE, related_name='trained_ins')
-    certification_date = models.DateField(auto_now_add=True)
-    certification_exp = models.DateField(auto_now_add=True)
+    certification_date = models.DateField()
+    certification_exp = models.DateField()
 
     def __str__(self):
         return (f'{self.physician} - {self.treatment}')
@@ -85,8 +85,8 @@ class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='appointments')
     prep_nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE, related_name='appointments')
     physician = models.ForeignKey(Physician, on_delete=models.CASCADE, related_name='appointments')
-    start_dt_time = models.DateTimeField(auto_now_add=True)
-    end_dt_time = models.DateTimeField(auto_now_add=True)
+    start_dt_time = models.DateTimeField()
+    end_dt_time = models.DateTimeField()
     examination_room = models.TextField()
 
     def __str__(self):
@@ -115,7 +115,7 @@ class Stay(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='stays')
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='stays')
     start_time = models.DateTimeField(auto_now_add=True)
-    end_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField()
 
     def __str__(self):
         return (f'{self.patient}, {self.start_time} - {self.end_time}')

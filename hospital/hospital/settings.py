@@ -31,12 +31,9 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ['MODE'] == 'dev' else False
 
-ALLOWED_HOSTS = ['django-env.eba-sgxspjyz.us-east-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['*']
 
-CORS_ALLOWED_ORIGINS = [
-    "django-env.eba-sgxspjyz.us-east-1.elasticbeanstalk.com",
-    "http://127.0.0.1:5432"
-]
+CORS_ALLOW_ALL = True
 
 # Application definition
 
